@@ -84,4 +84,13 @@ public class TasksTest {
         Assertions.assertEquals("Во вторник после обеда", meeting.getStart());
         Assertions.assertEquals("Выкатка 3й версии приложения", meeting.getTopic());
     }
+
+    @Test
+    public void testSearchEmptyTaskEpic() {
+        String[] subtasks = {"Молоко", "Яйца", "Хлеб"};
+        Epic epic = new Epic(55, subtasks);
+        Epic epicEmpty = new Epic(55, new String[]{});
+
+        Assertions.assertFalse(epicEmpty.matches("Молоко"));
+    }
 }

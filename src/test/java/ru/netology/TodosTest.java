@@ -32,7 +32,7 @@ public class TodosTest {
     }
 
     @Test
-    public void testSearchTodos() {
+    public void testSearchCountTodos() {
         SimpleTask simpleTask = new SimpleTask(5, "Позвонить родителям");
 
         String[] subtasks = {"Молоко", "Яйца", "Хлеб"};
@@ -41,7 +41,7 @@ public class TodosTest {
         Meeting meeting = new Meeting(
                 555,
                 "Выкатка 3й версии приложения",
-                "Приложение НетоБанка",
+                "Позвонить родителям жены",
                 "Во вторник после обеда"
         );
 
@@ -52,8 +52,39 @@ public class TodosTest {
         todos.add(meeting);
 
 
+        Task[] expected = {simpleTask, meeting};
+        Task[] actual = todos.search("Позвонить родителям");
+
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void testSearchOneTask() {
+        Meeting meeting = new Meeting(
+                555,
+                "Выкатка 3й версии приложения",
+                "Приложение НетоБанка",
+                "Во вторник после обеда"
+        );
+
+        Todos todos = new Todos();
+
+        todos.add(meeting);
+
         Task[] expected = {meeting};
-        Task[] actual = todos.search("версии");
+        Task[] actual = todos.search("НетоБанка");
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void testSearchEmptyTaskMeeting() {
+        Todos todos = new Todos();
+
+        Task[] expected = {};
+        Task[] actual = todos.search("обеда");
+
         Assertions.assertArrayEquals(expected, actual);
     }
 }
